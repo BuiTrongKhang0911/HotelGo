@@ -16,17 +16,23 @@
     <name>API Gateway</name>
     
     <dependencies>
-        <!-- Common Library -->
-        <dependency>
-            <groupId>com.hotelgo</groupId>
-            <artifactId>common-lib</artifactId>
-        </dependency>
-        
         <!-- Spring Cloud Gateway -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-gateway</artifactId>
             <version>4.1.0</version>
+        </dependency>
+        
+        <!-- Common Library (exclude spring-boot-starter-web to avoid conflict) -->
+        <dependency>
+            <groupId>com.hotelgo</groupId>
+            <artifactId>common-lib</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-web</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         
         <!-- Lombok -->
