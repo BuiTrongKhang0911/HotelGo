@@ -11,7 +11,7 @@ spring:
         - id: auth-service-route
           uri: http://localhost:8081
           predicates:
-            - Path=/auth/**
+            - Path=/api/auth/**
 
 # Logging to track request flow
 logging:
