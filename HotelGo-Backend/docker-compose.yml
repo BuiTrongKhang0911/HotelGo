@@ -1,23 +1,28 @@
 version: '3.8'
 
 services:
+  # ==========================================
+  # INFRASTRUCTURE
+  # ==========================================
   postgres-db:
     image: postgres:15-alpine
     container_name: hotelgo_postgres
     environment:
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: secretpassword
-      POSTGRES_DB: auth_db
     ports:
       - "5432:5432"
     volumes:
       - pg_data:/var/lib/postgresql/data
+      - ./infra/db-init/init.sql:/docker-entrypoint-initdb.d/init.sql
     restart: unless-stopped
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U admin"]
       interval: 10s
       timeout: 5s
       retries: 5
+    networks:
+      - hotelgo-network
 
   redis-cache:
     image: redis:7-alpine
@@ -32,7 +37,51 @@ services:
       interval: 10s
       timeout: 3s
       retries: 5
+    networks:
+      - hotelgo-network
+
+  # ==========================================
+  # MICROSERVICES
+  # ==========================================
+  auth-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        SERVICE_NAME: auth-service
+    container_name: hotelgo_auth_service
+    ports:
+      - "8081:8081"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-db:5432/auth_db
+      SPRING_DATASOURCE_USERNAME: admin
+      SPRING_DATASOURCE_PASSWORD: secretpassword
+    depends_on:
+      postgres-db:
+        condition: service_healthy
+    restart: unless-stopped
+    networks:
+      - hotelgo-network
+
+  api-gateway:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        SERVICE_NAME: api-gateway
+    container_name: hotelgo_api_gateway
+    ports:
+      - "8080:8080"
+    depends_on:
+      - auth-service
+    restart: unless-stopped
+    networks:
+      - hotelgo-network
 
 volumes:
   pg_data:
   redis_data:
+
+networks:
+  hotelgo-network:
+    driver: bridge
