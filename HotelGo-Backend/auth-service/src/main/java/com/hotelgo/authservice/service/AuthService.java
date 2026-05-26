@@ -1,9 +1,9 @@
-package com.example.authservice.service;
+package com.hotelgo.authservice.service;
 
-import com.example.authservice.dto.AuthRequest;
-import com.example.authservice.dto.AuthResponse;
-import com.example.authservice.entity.User;
-import com.example.authservice.repository.UserRepository;
+import com.hotelgo.authservice.dto.AuthRequest;
+import com.hotelgo.authservice.dto.AuthResponse;
+import com.hotelgo.authservice.entity.User;
+import com.hotelgo.authservice.repository.UserRepository;
 import com.hotelgo.common.exception.AppException;
 import com.hotelgo.common.exception.ErrorCode;
 import com.hotelgo.common.util.JwtUtil;

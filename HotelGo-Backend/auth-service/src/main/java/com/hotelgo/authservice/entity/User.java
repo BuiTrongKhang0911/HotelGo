@@ -1,4 +1,4 @@
-package com.example.authservice.entity;
+package com.hotelgo.authservice.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;

@@ -28,5 +28,5 @@ jwt:
 # Logging
 logging:
   level:
-    com.example.authservice: DEBUG
+    com.hotelgo.authservice: DEBUG
     org.hibernate.SQL: DEBUG

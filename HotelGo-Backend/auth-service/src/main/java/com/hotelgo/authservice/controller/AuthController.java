@@ -1,8 +1,8 @@
-package com.example.authservice.controller;
+package com.hotelgo.authservice.controller;
 
-import com.example.authservice.dto.AuthRequest;
-import com.example.authservice.dto.AuthResponse;
-import com.example.authservice.service.AuthService;
+import com.hotelgo.authservice.dto.AuthRequest;
+import com.hotelgo.authservice.dto.AuthResponse;
+import com.hotelgo.authservice.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
